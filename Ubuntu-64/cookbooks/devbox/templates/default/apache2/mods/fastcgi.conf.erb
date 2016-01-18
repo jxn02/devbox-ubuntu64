@@ -1,0 +1,16 @@
+<IfModule fastcgi_module>
+    Action fastcgi-php5-fpm /fastcgi.php5-fpm virtual
+    Alias /fastcgi.php5-fpm /var/www/cgi-bin/fastcgi.php5-fpm
+    FastCgiExternalServer /var/www/cgi-bin/fastcgi.php5-fpm -socket /var/run/php5-fpm.sock -idle-timeout 900 -pass-header Authorization -pass-header Range
+    AddHandler fastcgi-php5-fpm php phar
+
+    <Directory /var/www/cgi-bin>
+        AllowOverride none
+        Options FollowSymLinks
+        <IfModule authz_core_module>
+            # Only when redirected internally by FastCGI.
+            Require env REDIRECT_STATUS
+            Options +ExecCGI
+        </IfModule>
+    </Directory>
+</IfModule>

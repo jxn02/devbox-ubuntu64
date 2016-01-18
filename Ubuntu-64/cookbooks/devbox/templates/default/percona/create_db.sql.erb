@@ -1,0 +1,10 @@
+###    Create Database(s) ###
+
+##### On check si la variable tableau est vide ####
+<% if (node["database"]["dbname"]) %>
+    <% @database_name.each do |db| -%>
+     CREATE DATABASE IF NOT EXISTS <%= db %>;
+    <% end -%>
+<% end -%>
+
+

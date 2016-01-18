@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+require 'yaml'
+params = YAML::load_file("./config.yml")
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    config.vm.box = "ubuntu/trusty64"
+
+    config.vm.provider "virtualbox" do |v|
+        v.name = params['project']['name']
+        v.customize ["modifyvm", :id, "--memory", params['vm']['memory']]
+        v.customize ["modifyvm", :id, "--cpuexecutioncap", params['vm']['cpulimitpourcent']]
+        v.customize ["modifyvm", :id, "--cpus", params['vm']['cpus']]
+    end
+
+    if Vagrant.has_plugin?("vagrant-cachier")
+        config.cache.scope = :box
+    end
+
+    config.vm.hostname = params['project']['domain']
+    config.vm.network :private_network, ip: params['vm']['ip']
+
+    config.hostmanager.enabled = true
+    config.hostmanager.manage_host = true
+    config.hostmanager.aliases = params['project']['alias']
+    config.vm.provision :hostmanager
+
+    config.omnibus.chef_version = :latest
+    config.omnibus.cache_packages = true
+
+    config.berkshelf.enabled = true
+    config.berkshelf.berksfile_path = "Berksfile"
+
+    config.vm.provision "chef_solo" do |chef|
+        chef.cookbooks_path = ["cookbooks"]
+        chef.add_recipe 'apt::default'
+        chef.add_recipe 'devbox'
+    end
+end

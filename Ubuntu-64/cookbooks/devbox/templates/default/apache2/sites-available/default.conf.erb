@@ -1,0 +1,18 @@
+<VirtualHost *:80>
+    DocumentRoot "/var/www/<%= node['devbox']['app_name'] %>"
+    ServerName <%= node['devbox']['server_name'] %>
+    Options None
+
+    DirectoryIndex /index.php index.php index.html index.htm
+
+    <Directory /var/www/<%= node['devbox']['app_name'] %>>
+		Order allow,deny
+		Allow from all
+		AllowOverride FileInfo All
+		Require all granted
+    </Directory>
+
+    ErrorLog "<%= node['apache']['log_dir'] %>/<%= node['apache']['error_log'] %>-<%= node['devbox']['server_name'] %>.log"
+    CustomLog "<%= node['apache']['log_dir'] %>/<%= node['apache']['access_log'] %>-<%= node['devbox']['server_name'] %>.log" common
+    LogLevel warn
+</VirtualHost>

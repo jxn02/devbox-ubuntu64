@@ -1,0 +1,35 @@
+vm:
+  memory: 2048
+  cpulimitpourcent: 90
+  cpus: 2
+  ip: 192.168.56.200
+
+project:
+  name: 'magento2'
+  domain: 'magento2.dev'
+  alias:
+    - 'www.magento2.dev'
+    - 'www2.magento2.dev'
+
+system:
+  timezone: 'Europe/Paris'
+
+user:
+  name: 'magento2'
+  password: '$1$ZtCGZVFT$RmrZOKzKK/dMrp/svPvQH.' # Mot de passe: groupeafg59
+  group: 'magento2'
+
+apache2:
+  template: 'default'
+
+php:
+  install_method: 'package' # Method: package / source
+  source_url: ''
+  source_version: ''
+  source_checksum: ''
+
+mysql:
+  dbname :
+    - 'magento2'
+  username: 'admin'
+  password: 'password'
