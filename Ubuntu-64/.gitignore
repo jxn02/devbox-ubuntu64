@@ -3,4 +3,7 @@
 *.iml
 out
 gen
+.vagrant/
+Berksfile.lock
+.gitignore
 # Created by .ignore support plugin (hsz.mobi)

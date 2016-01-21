@@ -18,6 +18,7 @@ GRAPH
   devbox (1.0.0)
     apache2 (>= 0.0.0)
     apt (>= 0.0.0)
+    cron (>= 0.0.0)
     mailhog (>= 0.0.0)
     mongodb3 (>= 0.0.0)
     nginx (>= 0.0.0)

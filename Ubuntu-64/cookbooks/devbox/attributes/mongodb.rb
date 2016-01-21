@@ -3,6 +3,7 @@ params = YAML::load_file("/vagrant/config.yml")
 
 default['mongodb3']['version'] = '3.2.1'
 default['mongodb3']['package']['version'] = '3.2.1'
+default['mongodb3']['config']['mongod']['storage']['engine'] = 'wiredTiger'
 
 default['mongodb3']['package']['repo']['url'] = 'http://repo.mongodb.org/apt/ubuntu/'
 default['mongodb3']['package']['repo']['apt']['keyserver'] = 'hkp://keyserver.ubuntu.com:80'

@@ -10,6 +10,8 @@ include_recipe 'apache2::mod_headers'
 include_recipe 'apache2::mod_expires'
 include_recipe 'apache2::mod_deflate'
 include_recipe 'apache2::mod_rewrite'
+include_recipe 'apache2::mod_proxy'
+include_recipe 'apache2::mod_proxy_http'
 
 directory '/var/www/cgi-bin' do
     owner       'www-data'
@@ -31,5 +33,12 @@ web_app node[:devbox][:app_name] do
     server_name node[:devbox][:server_name]
     cookbook    'devbox'
     template    "apache2/sites-available/" + node[:devbox][:apache2][:template] + ".conf.erb"
+    enable      :true
+end
+
+web_app "mailhog-"+node[:devbox][:app_name] do
+    server_name "mailhog." + node[:devbox][:server_name]
+    cookbook    'devbox'
+    template    "apache2/sites-available/" + node[:devbox][:apache2][:template_mailhog] + ".conf.erb"
     enable      :true
 end

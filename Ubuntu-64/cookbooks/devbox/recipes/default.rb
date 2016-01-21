@@ -7,6 +7,7 @@ include_recipe 'devbox::mailhog'
 include_recipe 'devbox::php'
 include_recipe 'devbox::apache2'
 include_recipe 'devbox::percona'
+include_recipe 'devbox::cron'
 #include_recipe 'devbox::nginx'
 
 

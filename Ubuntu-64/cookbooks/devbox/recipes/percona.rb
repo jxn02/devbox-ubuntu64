@@ -22,8 +22,7 @@ include_recipe 'percona::server'
     owner node['devbox']['user']
     group node['devbox']['group']
       variables({
-         :username => node["database"]["username"],
-         :password => node["database"]["password"]
+         :username => node["database"]["username"]
       })
   end
 

@@ -10,6 +10,7 @@ project:
   alias:
     - 'www.magento2.dev'
     - 'www2.magento2.dev'
+    - 'mailhog.magento2.dev'
 
 system:
   timezone: 'Europe/Paris'
@@ -32,4 +33,14 @@ mysql:
   dbname :
     - 'magento2'
   username: 'admin'
-  password: 'password'
+
+crons:
+  - cron:
+        name: 'cron_magento'
+        minute: '0'
+        hour: '1'
+        day: '*'
+        month: '*'
+        weekday: '*'
+        command: 'sh /var/www/magento2/cron.sh'
+        mailto: ''

@@ -1,0 +1,35 @@
+<VirtualHost *:80>
+
+    ServerName mailhog.<%= node['devbox']['server_name'] %>
+
+    <IfModule mod_proxy.c>
+
+        ProxyPass  / http://127.0.0.1:8025
+        ProxyPassReverse  / http://127.0.0.1:8025
+
+        <Location />
+                Require all granted
+        </Location>
+
+    </IfModule>
+
+    <IfModule mod_rewrite.c>
+
+        # Integre toutes les images et scripts associés
+
+        RewriteEngine On
+
+        RewriteCond "%{HTTPS}" =off
+        RewriteRule "." "-" [E=protocol:http]
+        RewriteCond "%{HTTPS}" =on
+        RewriteRule "." "-" [E=protocol:https]
+
+        RewriteRule "^/(.*)" "%{ENV:protocol}://127.0.0.1:8025/$1" [P]
+
+    </IfModule>
+
+    ErrorLog "/var/log/apache2/mailhog.error.log"
+    CustomLog "/var/log/apache2/mailhog.access.log" common
+    LogLevel warn
+
+</VirtualHost>

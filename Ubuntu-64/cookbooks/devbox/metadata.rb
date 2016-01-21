@@ -18,6 +18,7 @@ depends 'mailhog'
 depends 'mongodb3'
 depends 'apache2'
 depends 'percona'
+depends 'cron'
 
 %W{ debian ubuntu }.each do |os|
     supports os

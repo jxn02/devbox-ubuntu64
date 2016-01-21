@@ -19,6 +19,12 @@ case node['php']['install_method']
         package "php5-mysql" do
             action :install
         end
+        package "php5-xsl" do
+            action :install
+        end
+        package "php5-intl" do
+            action :install
+        end
 
     when "source"
 
@@ -35,6 +41,17 @@ php_fpm_pool "#{node[:devbox][:app_name]}" do
     user                node[:devbox][:user]
     group               node[:devbox][:group]
     action              :install
+end
+
+template "#{node['php']['conf_dir_fpm']}/php.ini" do
+  source node['php']['ini']['template']
+  cookbook node['php']['ini']['cookbook']
+  unless platform?('windows')
+    owner 'root'
+    group node['root_group']
+    mode '0644'
+  end
+  variables(directives: node['php']['directives'])
 end
 
 service "php5-fpm" do
