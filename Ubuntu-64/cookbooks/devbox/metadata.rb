@@ -1,6 +1,6 @@
 name                'devbox'
 maintainer          'Julien Lorthios'
-maintainer_email    'julien.lorthios@gmail.com'
+maintainer_email    'julien.lorthios@groupeafg.com'
 description         'Une super box vagrant de la mort qui tue'
 version             '1.0.0'
 
@@ -19,6 +19,8 @@ depends 'mongodb3'
 depends 'apache2'
 depends 'percona'
 depends 'cron'
+depends 'glances'
+#depends 'jenkins'
 
 %W{ debian ubuntu }.each do |os|
     supports os

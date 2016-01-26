@@ -1,7 +1,7 @@
 vm:
   memory: 2048
-  cpulimitpourcent: 90
-  cpus: 2
+  cpulimitpourcent: 100
+  cpus: 4
   ip: 192.168.56.200
 
 project:
@@ -36,9 +36,9 @@ mysql:
 
 crons:
   - cron:
-        name: 'cron_magento'
-        minute: '0'
-        hour: '1'
+        name: 'cron_magento1'
+        minute: '*/5'
+        hour: '*'
         day: '*'
         month: '*'
         weekday: '*'

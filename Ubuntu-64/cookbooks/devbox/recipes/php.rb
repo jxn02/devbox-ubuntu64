@@ -25,6 +25,12 @@ case node['php']['install_method']
         package "php5-intl" do
             action :install
         end
+        package "php5-redis" do
+            action :install
+        end
+        package "php5-imagick" do
+            action :install
+        end
 
     when "source"
 
@@ -35,11 +41,22 @@ include_recipe 'phpmd'
 include_recipe 'phpcs::default'
 include_recipe 'phpcs::coding_standard'
 
+fpm_additional_config = {
+    'php_admin_flag[log_errors]' => 'on',
+    'php_admin_value[memory_limit]' => '768M',
+    'php_admin_value[max_execution_time]' => '1800'
+}
+
 php_fpm_pool "#{node[:devbox][:app_name]}" do
     pool_name           node[:devbox][:app_name]
     listen              '/var/run/php5-fpm.sock'
     user                node[:devbox][:user]
     group               node[:devbox][:group]
+    process_manager     'static'
+    start_servers       2
+    min_spare_servers   1
+    max_spare_servers   8
+    additional_config   fpm_additional_config
     action              :install
 end
 
